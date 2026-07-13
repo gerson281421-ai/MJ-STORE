@@ -43,7 +43,7 @@
         }
 
         /* -------------------------------------------------------------------------- */
-        /* 2. LAYOUT DO HEADER FIXO                                                  */
+        /* 2. LAYOUT DO HEADER FIXO                                                   */
         /* -------------------------------------------------------------------------- */
         header {
             background-color: var(--bg-card);
@@ -166,7 +166,7 @@
         }
 
         /* -------------------------------------------------------------------------- */
-        /* 4. VITRINE E PRODUTOS (CSS GRID)                                          */
+        /* 4. VITRINE E PRODUTOS (CSS GRID)                                           */
         /* -------------------------------------------------------------------------- */
         .main-content {
             max-width: 1400px;
@@ -509,14 +509,8 @@
         /* -------------------------------------------------------------------------- */
         const WHATSAPP_NUMBER = "5592999970070";
 
-        // Dados de inicialização estruturada (Se o banco local do navegador estiver limpo)
-        const INITIAL_PRODUCTS = [
-            { id: 1, titulo: "Camisa Algodão Egípcio Premium", categoria: "Camisas", preco: 89.90, imagem: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500&auto=format&fit=crop&q=80", desc: "Modelagem impecável e conforto extremo para o uso diário." },
-            { id: 2, titulo: "Boné Snapback Trucker Core", categoria: "Bonés", preco: 69.90, imagem: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=500&auto=format&fit=crop&q=80", desc: "Ajuste regulável traseiro com malha respirável de alta qualidade." },
-            { id: 3, titulo: "Caneca de Porcelana Soft Touch", categoria: "Canecas", preco: 42.00, imagem: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=500&auto=format&fit=crop&q=80", desc: "Perfeita para café ou decoração com acabamento fosco acetinado." },
-            { id: 4, titulo: "Garrafa Térmica Matte Inox 750ml", categoria: "Garrafas Térmicas", preco: 159.90, imagem: "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=500&auto=format&fit=crop&q=80", desc: "Isolamento a vácuo avançado que mantém temperaturas por horas." },
-            { id: 5, titulo: "Bíblia Sagrada Edição de Luxo", categoria: "Bíblias", preco: 180.00, imagem: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=500&auto=format&fit=crop&q=80", desc: "Letra legível, mapas coloridos, harpa e acabamento em couro sintético." },
-            { id: 6, titulo: "Chaveiro Mosquetão Multifuncional Cord", categoria: "Diversos", preco: 25.00, imagem: "https://images.unsplash.com/photo-1582139329536-e7284fece509?w=500&auto=format&fit=crop&q=80", desc: "Acessório prático com cabo de alta resistência e engate rápido." }
+        // Dados de inicialização estruturada - COLE AQUI O SEU TEXTO GIGANTE DOS PRODUTOS DO ADM
+        const INITIAL_PRODUCTS = [[{"id":1,"titulo":"Camisa Algodão Egípcio Premium","categoria":"Camisas","preco":10,"imagem":"https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500&auto=format&fit=crop&q=80","desc":"Modelagem impecável e conforto extremo para o uso diário."},{"id":2,"titulo":"Boné Snapback Trucker Core","categoria":"Bonés","preco":10,"imagem":"https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=500&auto=format&fit=crop&q=80","desc":"Ajuste regulável traseiro com malha respirável de alta qualidade."},{"id":3,"titulo":"Caneca de Porcelana Soft Touch","categoria":"Canecas","preco":10,"imagem":"https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=500&auto=format&fit=crop&q=80","desc":"Perfeita para café ou decoração com acabamento fosco acetinado."},{"id":4,"titulo":"Garrafa Térmica Matte Inox 750ml","categoria":"Garrafas Térmicas","preco":10,"imagem":"https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=500&auto=format&fit=crop&q=80","desc":"Isolamento a vácuo avançado que mantém temperaturas por horas."},{"id":1783912966886,"titulo":"TESTE","categoria":"Camisas","preco":10,"desc":"TESTE","imagem":"data:image/jpeg;base64,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
         ];
 
         /* -------------------------------------------------------------------------- */
@@ -551,13 +545,8 @@
         /* 9. LOGICA DE FILTRO E EXIBIÇÃO DA VITRINE                                  */
         /* -------------------------------------------------------------------------- */
         function initApp() {
-            const stored = localStorage.getItem('mj_store_storage');
-            if (stored) {
-                products = JSON.parse(stored);
-            } else {
-                products = [...INITIAL_PRODUCTS];
-                saveToStorage();
-            }
+            // Mudança crucial para o index de clientes: Lê sempre direto do arquivo!
+            products = [...INITIAL_PRODUCTS];
             filterAndRender();
         }
 
