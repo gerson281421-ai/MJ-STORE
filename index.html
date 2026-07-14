@@ -109,6 +109,7 @@
         }
 
         .btn-admin-toggle {
+            display: none; /* Escondido por padrão para os clientes */
             background-color: var(--text-main);
             color: white;
             border: none;
@@ -433,7 +434,7 @@
                 <input type="text" id="searchInput" class="search-input" placeholder="Buscar no catálogo...">
             </div>
 
-            <button class="btn-admin-toggle" id="btnAdminMode" style="display: none;">Painel ADM</button>
+            <button class="btn-admin-toggle" id="btnAdminMode">Painel ADM</button>
         </div>
     </header>
 
@@ -509,7 +510,7 @@
         /* -------------------------------------------------------------------------- */
         const WHATSAPP_NUMBER = "5592999970070";
 
-        // Dados de inicialização estruturada - COLE AQUI O SEU TEXTO GIGANTE DOS PRODUTOS DO ADM
+        // Dados de inicialização estruturada
         const INITIAL_PRODUCTS = [
             { id: 1, titulo: "Camisa Algodão Egípcio Premium", categoria: "Camisas", preco: 89.90, imagem: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500&auto=format&fit=crop&q=80", desc: "Modelagem impecável e conforto extremo para o uso diário." },
             { id: 2, titulo: "Boné Snapback Trucker Core", categoria: "Bonés", preco: 69.90, imagem: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=500&auto=format&fit=crop&q=80", desc: "Ajuste regulável traseiro com malha respirável de alta qualidade." },
@@ -544,20 +545,23 @@
             formDesc: document.getElementById('formDesc'),
             formImgPreview: document.getElementById('formImgPreview'),
             previewBox: document.getElementById('previewBox'),
-            drawerTitle: document.getElementById('drawerTitle')
+            drawerTitle: document.getElementById('drawerTitle'),
+            btnSubmitForm: document.getElementById('btnSubmitForm')
         };
 
         /* -------------------------------------------------------------------------- */
         /* 9. LOGICA DE FILTRO E EXIBIÇÃO DA VITRINE                                  */
         /* -------------------------------------------------------------------------- */
         function initApp() {
-            // Mudança crucial para o index de clientes: Lê sempre direto do arquivo!
             products = [...INITIAL_PRODUCTS];
-            filterAndRender();
-        }
+            
+            // VERIFICAÇÃO SEGREDA DO LINK (?adm)
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('adm')) {
+                DOM.btnAdminMode.style.display = "block"; // Só mostra o botão se tiver ?adm no link
+            }
 
-        function saveToStorage() {
-            localStorage.setItem('mj_store_storage', JSON.stringify(products));
+            filterAndRender();
         }
 
         function filterAndRender() {
@@ -575,7 +579,6 @@
         function renderGrid(list) {
             DOM.grid.innerHTML = "";
 
-            // Botão especial de criação rápida na lista quando em modo ADM
             if (isAdminMode) {
                 const addCard = document.createElement('div');
                 addCard.className = 'product-card';
@@ -647,7 +650,6 @@
         /* 11. SISTEMA CRUD E LEITURA DE IMAGEM LOCAL (FILEREADER TO BASE64)         */
         /* -------------------------------------------------------------------------- */
         
-        // Listener estrutural para interceptar e converter arquivos locais
         DOM.formImage.addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (!file) return;
@@ -691,15 +693,15 @@
             toggleDrawer(true);
         }
 
-        function deleteItem(id) {
+        async function deleteItem(id) {
             if (confirm("Confirmar a exclusão permanente deste item do catálogo MJ STORE?")) {
                 products = products.filter(p => p.id !== id);
-                saveToStorage();
                 filterAndRender();
+                await syncWithGithub();
             }
         }
 
-        DOM.productForm.addEventListener('submit', (e) => {
+        DOM.productForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const idValue = DOM.formProductId.value;
             
@@ -717,22 +719,113 @@
             };
 
             if (idValue) {
-                // Modo Escrita: Alteração
                 const index = products.findIndex(p => p.id === parseInt(idValue));
                 if (index !== -1) products[index] = { ...products[index], ...data };
             } else {
-                // Modo Escrita: Inserção
                 const newItem = { id: Date.now(), ...data };
                 products.push(newItem);
             }
 
-            saveToStorage();
             toggleDrawer(false);
             filterAndRender();
+            await syncWithGithub();
         });
 
         /* -------------------------------------------------------------------------- */
-        /* 12. CONTROLES DE INTERFACE & LISTENERS                                     */
+        /* 12. MOTOR DE SINCRONIZAÇÃO AUTOMÁTICA COM GITHUB API                      */
+        /* -------------------------------------------------------------------------- */
+        function getGithubCredentials() {
+            let token = localStorage.getItem('mj_github_token');
+            let username = localStorage.getItem('mj_github_username');
+            let repo = localStorage.getItem('mj_github_repo') || 'MJ-STORE';
+            
+            if (!token || !username) {
+                alert("Para salvar as alterações direto no seu GitHub, precisamos configurar as suas credenciais uma única vez.");
+                token = prompt("Insira seu GitHub Personal Access Token (Classic):")?.trim();
+                username = prompt("Insira seu nome de usuário do GitHub:")?.trim();
+                
+                if (token && username) {
+                    localStorage.setItem('mj_github_token', token);
+                    localStorage.setItem('mj_github_username', username);
+                    localStorage.setItem('mj_github_repo', repo);
+                } else {
+                    alert("Ação cancelada. As mudanças só ficarão salvas temporariamente na sua tela atual.");
+                    return null;
+                }
+            }
+            return { token, username, repo };
+        }
+
+        async function syncWithGithub() {
+            const creds = getGithubCredentials();
+            if (!creds) return;
+
+            DOM.btnSubmitForm.disabled = true;
+            DOM.btnSubmitForm.innerText = "Sincronizando com GitHub...";
+            const originalAdminText = DOM.btnAdminMode.innerText;
+            DOM.btnAdminMode.innerText = "Sincronizando...";
+
+            try {
+                const filePath = "index.html"; 
+                const url = `https://api.github.com/repos/${creds.username}/${creds.repo}/contents/${filePath}`;
+                
+                const getFileRes = await fetch(url, {
+                    headers: { "Authorization": `token ${creds.token}` }
+                });
+
+                if (!getFileRes.ok) {
+                    throw new Error("Não foi possível ler o arquivo do GitHub. Verifique se o Token ou Usuário estão corretos.");
+                }
+
+                const fileData = await getFileRes.json();
+                const sha = fileData.sha;
+
+                let currentHtml = document.documentElement.outerHTML;
+                const productsJsonString = JSON.stringify(products, null, 12);
+                
+                const regex = /const INITIAL_PRODUCTS = \[\s*[\s\S]*?\s*\];/;
+                const updatedHtml = "<!DOCTYPE html>\n" + currentHtml.replace(regex, `const INITIAL_PRODUCTS = ${productsJsonString};`);
+
+                const utf8Bytes = new TextEncoder().encode(updatedHtml);
+                const base64Content = btoa(String.fromCharCode(...utf8Bytes));
+
+                const updateRes = await fetch(url, {
+                    method: "PUT",
+                    headers: {
+                        "Authorization": `token ${creds.token}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        message: "Atualização de produtos via Painel ADM",
+                        content: base64Content,
+                        sha: sha
+                    })
+                });
+
+                if (updateRes.ok) {
+                    alert("✅ Catálogo atualizado com sucesso no GitHub! Em cerca de 1 minuto o seu site público estará atualizado.");
+                } else {
+                    const errInfo = await updateRes.json();
+                    throw new Error(errInfo.message || "Erro desconhecido ao salvar.");
+                }
+
+            } catch (error) {
+                console.error(error);
+                alert(`❌ Erro de sincronização: ${error.message}\n\nSe o seu Token expirou ou está errado, limpe as credenciais no botão abaixo.`);
+                
+                if (confirm("Deseja redefinir as suas credenciais do GitHub (Token/Usuário) para tentar de novo?")) {
+                    localStorage.removeItem('mj_github_token');
+                    localStorage.removeItem('mj_github_username');
+                }
+            } finally {
+                DOM.btnSubmitForm.disabled = false;
+                DOM.btnSubmitForm.innerText = "Salvar Produto";
+                DOM.btnAdminMode.innerText = isAdminMode ? "Fechar Painel" : "Painel ADM";
+            }
+        }
+
+        /* -------------------------------------------------------------------------- */
+        /* 13. CONTROLES DE INTERFACE & LISTENERS                                     */
         /* -------------------------------------------------------------------------- */
         DOM.search.addEventListener('input', filterAndRender);
 
