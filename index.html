@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-<head>
+<html lang="pt-BR"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MJ STORE — Catálogo Oficial</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 
     <style>
         /* -------------------------------------------------------------------------- */
@@ -421,7 +420,7 @@
         }
     </style>
 </head>
-<body>
+<body class="">
 
     <div class="drawer-overlay" id="drawerOverlay"></div>
 
@@ -434,7 +433,7 @@
                 <input type="text" id="searchInput" class="search-input" placeholder="Buscar no catálogo...">
             </div>
 
-            <button class="btn-admin-toggle" id="btnAdminMode">Painel ADM</button>
+            <button class="btn-admin-toggle" id="btnAdminMode" style="display: none;">Painel ADM</button>
         </div>
     </header>
 
@@ -451,14 +450,113 @@
     </section>
 
     <main class="main-content">
-        <div class="products-grid" id="productsGrid">
-            </div>
+        <div class="products-grid" id="productsGrid"><div class="product-card" style="border: 2px dashed var(--primary); justify-content: center; align-items: center; cursor: pointer; padding: 3rem 1rem;">
+                    <div style="text-align:center; color: var(--primary);">
+                        <span style="font-size:3rem; display:block; font-weight:300; line-height:1">+</span>
+                        <span style="font-weight:700; font-size:0.9rem">Adicionar Item</span>
+                    </div>
+                </div><article class="product-card">
+                    <div class="admin-actions-overlay">
+                        <button class="btn-crud btn-crud-edit" onclick="event.stopPropagation(); editItem(1)">Editar</button>
+                        <button class="btn-crud btn-crud-del" onclick="event.stopPropagation(); deleteItem(1)">Excluir</button>
+                    </div>
+                    <div class="image-box">
+                        <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500&amp;auto=format&amp;fit=crop&amp;q=80" alt="Camisa Algodão Egípcio Premium" loading="lazy">
+                    </div>
+                    <div class="card-details">
+                        <span class="card-category">Camisas</span>
+                        <h3 class="card-title">Camisa Algodão Egípcio Premium</h3>
+                        <p class="card-desc">Modelagem impecável e conforto extremo para o uso diário.</p>
+                        <div class="card-footer-price">
+                            <span class="price-tag">R$ 89,90</span>
+                            <button class="btn-buy" onclick="sendWhatsAppRequest('Camisa Algodão Egípcio Premium', 'Camisas', 89.9)">
+                                Comprar
+                            </button>
+                        </div>
+                    </div>
+                </article><article class="product-card">
+                    <div class="admin-actions-overlay">
+                        <button class="btn-crud btn-crud-edit" onclick="event.stopPropagation(); editItem(3)">Editar</button>
+                        <button class="btn-crud btn-crud-del" onclick="event.stopPropagation(); deleteItem(3)">Excluir</button>
+                    </div>
+                    <div class="image-box">
+                        <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=500&amp;auto=format&amp;fit=crop&amp;q=80" alt="Caneca de Porcelana Soft Touch" loading="lazy">
+                    </div>
+                    <div class="card-details">
+                        <span class="card-category">Canecas</span>
+                        <h3 class="card-title">Caneca de Porcelana Soft Touch</h3>
+                        <p class="card-desc">Perfeita para café ou decoração com acabamento fosco acetinado.</p>
+                        <div class="card-footer-price">
+                            <span class="price-tag">R$ 42,00</span>
+                            <button class="btn-buy" onclick="sendWhatsAppRequest('Caneca de Porcelana Soft Touch', 'Canecas', 42)">
+                                Comprar
+                            </button>
+                        </div>
+                    </div>
+                </article><article class="product-card">
+                    <div class="admin-actions-overlay">
+                        <button class="btn-crud btn-crud-edit" onclick="event.stopPropagation(); editItem(4)">Editar</button>
+                        <button class="btn-crud btn-crud-del" onclick="event.stopPropagation(); deleteItem(4)">Excluir</button>
+                    </div>
+                    <div class="image-box">
+                        <img src="https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=500&amp;auto=format&amp;fit=crop&amp;q=80" alt="Garrafa Térmica Matte Inox 750ml" loading="lazy">
+                    </div>
+                    <div class="card-details">
+                        <span class="card-category">Garrafas Térmicas</span>
+                        <h3 class="card-title">Garrafa Térmica Matte Inox 750ml</h3>
+                        <p class="card-desc">Isolamento a vácuo avançado que mantém temperaturas por horas.</p>
+                        <div class="card-footer-price">
+                            <span class="price-tag">R$ 159,90</span>
+                            <button class="btn-buy" onclick="sendWhatsAppRequest('Garrafa Térmica Matte Inox 750ml', 'Garrafas Térmicas', 159.9)">
+                                Comprar
+                            </button>
+                        </div>
+                    </div>
+                </article><article class="product-card">
+                    <div class="admin-actions-overlay">
+                        <button class="btn-crud btn-crud-edit" onclick="event.stopPropagation(); editItem(5)">Editar</button>
+                        <button class="btn-crud btn-crud-del" onclick="event.stopPropagation(); deleteItem(5)">Excluir</button>
+                    </div>
+                    <div class="image-box">
+                        <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=500&amp;auto=format&amp;fit=crop&amp;q=80" alt="Bíblia Sagrada Edição de Luxo" loading="lazy">
+                    </div>
+                    <div class="card-details">
+                        <span class="card-category">Bíblias</span>
+                        <h3 class="card-title">Bíblia Sagrada Edição de Luxo</h3>
+                        <p class="card-desc">Letra legível, mapas coloridos, harpa e acabamento em couro sintético.</p>
+                        <div class="card-footer-price">
+                            <span class="price-tag">R$ 180,00</span>
+                            <button class="btn-buy" onclick="sendWhatsAppRequest('Bíblia Sagrada Edição de Luxo', 'Bíblias', 180)">
+                                Comprar
+                            </button>
+                        </div>
+                    </div>
+                </article><article class="product-card">
+                    <div class="admin-actions-overlay">
+                        <button class="btn-crud btn-crud-edit" onclick="event.stopPropagation(); editItem(6)">Editar</button>
+                        <button class="btn-crud btn-crud-del" onclick="event.stopPropagation(); deleteItem(6)">Excluir</button>
+                    </div>
+                    <div class="image-box">
+                        <img src="https://images.unsplash.com/photo-1582139329536-e7284fece509?w=500&amp;auto=format&amp;fit=crop&amp;q=80" alt="Chaveiro Mosquetão Multifuncional Cord" loading="lazy">
+                    </div>
+                    <div class="card-details">
+                        <span class="card-category">Diversos</span>
+                        <h3 class="card-title">Chaveiro Mosquetão Multifuncional Cord</h3>
+                        <p class="card-desc">Acessório prático com cabo de alta resistência e engate rápido.</p>
+                        <div class="card-footer-price">
+                            <span class="price-tag">R$ 25,00</span>
+                            <button class="btn-buy" onclick="sendWhatsAppRequest('Chaveiro Mosquetão Multifuncional Cord', 'Diversos', 25)">
+                                Comprar
+                            </button>
+                        </div>
+                    </div>
+                </article></div>
     </main>
 
     <aside class="admin-drawer" id="adminDrawer">
         <div class="drawer-header">
             <h2 id="drawerTitle" style="font-size: 1.2rem; font-weight: 700;">Adicionar Produto</h2>
-            <button id="btnCloseDrawer" style="background:none; border:none; font-size: 1.5rem; cursor:pointer;">&times;</button>
+            <button id="btnCloseDrawer" style="background:none; border:none; font-size: 1.5rem; cursor:pointer;">×</button>
         </div>
         <div class="drawer-body">
             <form id="productForm">
@@ -466,12 +564,12 @@
                 
                 <div class="form-group">
                     <label for="formTitle">Título do Produto *</label>
-                    <input type="text" id="formTitle" class="form-control" placeholder="Ex: Camisa Polo MJ Confort" required>
+                    <input type="text" id="formTitle" class="form-control" placeholder="Ex: Camisa Polo MJ Confort" required="">
                 </div>
 
                 <div class="form-group">
                     <label for="formCategory">Categoria *</label>
-                    <select id="formCategory" class="form-control" required>
+                    <select id="formCategory" class="form-control" required="">
                         <option value="Camisas">Camisas</option>
                         <option value="Bonés">Bonés</option>
                         <option value="Canecas">Canecas</option>
@@ -483,7 +581,7 @@
 
                 <div class="form-group">
                     <label for="formPrice">Preço (R$) *</label>
-                    <input type="number" id="formPrice" class="form-control" placeholder="0.00" step="0.01" required>
+                    <input type="number" id="formPrice" class="form-control" placeholder="0.00" step="0.01" required="">
                 </div>
 
                 <div class="form-group">
@@ -496,10 +594,10 @@
 
                 <div class="form-group">
                     <label for="formDesc">Descrição Curta *</label>
-                    <textarea id="formDesc" class="form-control" rows="3" placeholder="Insira os principais detalhes..." required></textarea>
+                    <textarea id="formDesc" class="form-control" rows="3" placeholder="Insira os principais detalhes..." required=""></textarea>
                 </div>
 
-                <button type="submit" class="btn-submit-form" id="btnSubmitForm">Salvar Produto</button>
+                <button type="submit" class="btn-submit-form" id="btnSubmitForm" disabled="">Sincronizando com GitHub...</button>
             </form>
         </div>
     </aside>
@@ -512,13 +610,47 @@
 
         // Dados de inicialização estruturada
         const INITIAL_PRODUCTS = [
-            { id: 1, titulo: "Camisa Algodão Egípcio Premium", categoria: "Camisas", preco: 89.90, imagem: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500&auto=format&fit=crop&q=80", desc: "Modelagem impecável e conforto extremo para o uso diário." },
-            { id: 2, titulo: "Boné Snapback Trucker Core", categoria: "Bonés", preco: 69.90, imagem: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=500&auto=format&fit=crop&q=80", desc: "Ajuste regulável traseiro com malha respirável de alta qualidade." },
-            { id: 3, titulo: "Caneca de Porcelana Soft Touch", categoria: "Canecas", preco: 42.00, imagem: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=500&auto=format&fit=crop&q=80", desc: "Perfeita para café ou decoração com acabamento fosco acetinado." },
-            { id: 4, titulo: "Garrafa Térmica Matte Inox 750ml", categoria: "Garrafas Térmicas", preco: 159.90, imagem: "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=500&auto=format&fit=crop&q=80", desc: "Isolamento a vácuo avançado que mantém temperaturas por horas." },
-            { id: 5, titulo: "Bíblia Sagrada Edição de Luxo", categoria: "Bíblias", preco: 180.00, imagem: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=500&auto=format&fit=crop&q=80", desc: "Letra legível, mapas coloridos, harpa e acabamento em couro sintético." },
-            { id: 6, titulo: "Chaveiro Mosquetão Multifuncional Cord", categoria: "Diversos", preco: 25.00, imagem: "https://images.unsplash.com/photo-1582139329536-e7284fece509?w=500&auto=format&fit=crop&q=80", desc: "Acessório prático com cabo de alta resistência e engate rápido." }
-        ];
+          {
+                    "id": 1,
+                    "titulo": "Camisa Algodão Egípcio Premium",
+                    "categoria": "Camisas",
+                    "preco": 89.9,
+                    "imagem": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500&auto=format&fit=crop&q=80",
+                    "desc": "Modelagem impecável e conforto extremo para o uso diário."
+          },
+          {
+                    "id": 3,
+                    "titulo": "Caneca de Porcelana Soft Touch",
+                    "categoria": "Canecas",
+                    "preco": 42,
+                    "imagem": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=500&auto=format&fit=crop&q=80",
+                    "desc": "Perfeita para café ou decoração com acabamento fosco acetinado."
+          },
+          {
+                    "id": 4,
+                    "titulo": "Garrafa Térmica Matte Inox 750ml",
+                    "categoria": "Garrafas Térmicas",
+                    "preco": 159.9,
+                    "imagem": "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=500&auto=format&fit=crop&q=80",
+                    "desc": "Isolamento a vácuo avançado que mantém temperaturas por horas."
+          },
+          {
+                    "id": 5,
+                    "titulo": "Bíblia Sagrada Edição de Luxo",
+                    "categoria": "Bíblias",
+                    "preco": 180,
+                    "imagem": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=500&auto=format&fit=crop&q=80",
+                    "desc": "Letra legível, mapas coloridos, harpa e acabamento em couro sintético."
+          },
+          {
+                    "id": 6,
+                    "titulo": "Chaveiro Mosquetão Multifuncional Cord",
+                    "categoria": "Diversos",
+                    "preco": 25,
+                    "imagem": "https://images.unsplash.com/photo-1582139329536-e7284fece509?w=500&auto=format&fit=crop&q=80",
+                    "desc": "Acessório prático com cabo de alta resistência e engate rápido."
+          }
+];
 
         /* -------------------------------------------------------------------------- */
         /* 8. INSTANCIAMENTO E GERENCIAMENTO DE ESTADO                                */
@@ -893,5 +1025,6 @@
         // Start da Aplicação
         window.addEventListener('DOMContentLoaded', initApp);
     </script>
-</body>
-</html>
+
+
+</body></html>
