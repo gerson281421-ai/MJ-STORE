@@ -786,8 +786,12 @@
                 const regex = /const INITIAL_PRODUCTS = \[\s*[\s\S]*?\s*\];/;
                 const updatedHtml = "<!DOCTYPE html>\n" + currentHtml.replace(regex, `const INITIAL_PRODUCTS = ${productsJsonString};`);
 
-                const utf8Bytes = new TextEncoder().encode(updatedHtml);
-                const base64Content = btoa(String.fromCharCode(...utf8Bytes));
+                // CORREÇÃO ROBUSTA: Converte o código HTML para Base64 de forma assíncrona, suportando arquivos gigantescos sem estourar a memória (Call Stack)
+                const base64Content = await new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onloadend = () => resolve(reader.result.split(',')[1]);
+                    reader.readAsDataURL(new Blob([updatedHtml], { type: 'text/html;charset=utf-8' }));
+                });
 
                 const updateRes = await fetch(url, {
                     method: "PUT",
